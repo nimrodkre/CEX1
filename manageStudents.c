@@ -133,12 +133,12 @@ int checkData(int sscanfResult, long id, char name[], int grade, int age,
         return 0;
     }
 
-    if (checkCity(city) == 0)
+    if (checkCountry(country) == 0)
     {
         return 0;
     }
 
-    if (checkCountry(country) == 0)
+    if (checkCity(city) == 0)
     {
         return 0;
     }
@@ -478,7 +478,7 @@ void merge(Student students[], int left, int middle, int right)
         }
         else
         {
-            if (students[left + currLeft + currRight].grade < students[left + currLeft].grade)
+            if (studentsLeft[currLeft].grade < studentsRight[currRight].grade)
             {
                 swap2(students, studentsLeft, left + currLeft + currRight, currLeft);
                 currLeft++;
@@ -593,6 +593,7 @@ int runQuick(void)
  */
 int main(int argc, char *argv[])
 {
+    runMerge();
     if (argc != USAGE_ARGUMENTS)
     {
         printf("USAGE: sortStudents <action>\n");
