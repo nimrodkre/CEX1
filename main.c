@@ -64,7 +64,7 @@ int checkName(char name[]);
 
 int checkCountryCity(char countryCity[]);
 
-int checkData(unsigned int sscanfResult, long id, char name[], int grade, int age,
+int checkData(int sscanfResult, long id, char name[], int grade, int age,
               char country[], char city[]);
 
 void printBest(Student students[], int arrLen);
@@ -100,7 +100,7 @@ int runQuick(void);
  * @param city the city of the student
  * @return 0 is bad else 1 if good
  */
-int checkData(unsigned int sscanfResult, long id, char name[], int grade, int age,
+int checkData(int sscanfResult, long id, char name[], int grade, int age,
               char country[], char city[])
 {
     if (sscanfResult != EXPECTED_ARGUMENTS)
@@ -191,7 +191,7 @@ int checkName(char name[])
     {
         return 0;
     }
-    for (int i = 0; i < len; i++)
+    for (unsigned long i = 0; i < len; i++)
     {
         if (!((name[i] >= 'A' && name[i] <= 'z') || (name[i] == '-') || (name[i] == ' ')))
         {
@@ -214,7 +214,7 @@ int checkCountryCity(char countryCity[])
     {
         return 0;
     }
-    for (int i = 0; i < len; i++)
+    for (unsigned long i = 0; i < len; i++)
     {
         if (!((countryCity[i] >= 'A' && countryCity[i] <= 'z') || (countryCity[i] == '-')))
         {
@@ -246,7 +246,7 @@ Student getStudent(int *lineNumber)
         // check if q was received
         if (strncmp(input, "q", 1) == 0)
         {
-            Student retStudent = {0, 'a', 0, 0, 'a', 'a'};
+            Student retStudent = {0, {'a'}, 0, 0, {'a'}, {'a'}};
             return retStudent;
         }
 
@@ -257,7 +257,7 @@ Student getStudent(int *lineNumber)
             input[len - 1] = 0;
         }
 
-        uint8_t sscanfResult = sscanf(input, "%ld,%[^,],%d,%d,%[^,],%[^,]", &student.id, student.name,
+        int sscanfResult = sscanf(input, "%ld,%[^,],%d,%d,%[^,],%[^,]", &student.id, student.name,
                                       &student.grade, &student.age, student.country, student.city);
 
         if (!checkData(sscanfResult, student.id, student.name, student.grade, student.age, student.country,
@@ -266,7 +266,8 @@ Student getStudent(int *lineNumber)
             printf("ERROR: Arguments wern't given correctly \n");
             printf("in line %d \n", *lineNumber);
             answer = 0;
-        } else
+        }
+        else
         {
             answer = 1;
         }
@@ -304,7 +305,7 @@ int getStudents(Student students[])
  */
 void printBest(Student students[], int arrLen)
 {
-    Student retStudent = {0, 'a', 0, 0, 'a', 'a'};
+    Student retStudent = {0, {'a'}, 0, 0, {'a'}, {'a'}};
     double best = 0;
 
     for (int i = 0; i < arrLen; i++)
@@ -389,17 +390,20 @@ void merge(Student students[], int left, int middle, int right)
         {
             swap(students, left + currLeft + currRight, currRight);
             currRight++;
-        } else if (currRight == sizeRight)
+        }
+        else if (currRight == sizeRight)
         {
             swap(students, left + currLeft + currRight, currLeft);
             currLeft++;
-        } else
+        }
+        else
         {
             if (students[left + currLeft + currRight].grade < students[left + currLeft].grade)
             {
                 swap(students, left + currLeft + currRight, left + currLeft);
                 currLeft++;
-            } else
+            }
+            else
             {
                 swap(students, left + currLeft + currRight, right + currRight);
                 currRight++;
