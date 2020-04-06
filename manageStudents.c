@@ -322,10 +322,10 @@ Student getStudent(int *lineNumber)
         }
 
         int sscanfResult = sscanf(input, "%ld,%[^,],%d,%d,%[^,],%[^,]", &student.id, student.name,
-                                      &student.grade, &student.age, student.country, student.city);
+                                  &student.grade, &student.age, student.country, student.city);
 
         if (!checkData(sscanfResult, student.id, student.name, student.grade, student.age, student.country,
-            student.city))
+                       student.city))
         {
             printf("in line %d\n", *lineNumber);
             answer = 0;
@@ -369,7 +369,7 @@ int getStudents(Student students[])
 void printBest(Student students[], int arrLen)
 {
     Student retStudent = {0, {'a'}, 0, 0, {'a'}, {'a'}};
-    double best = 0;
+    double best = -1;
 
     for (int i = 0; i < arrLen; i++)
     {
@@ -433,6 +433,13 @@ void swap(Student students[], int left, int right)
     students[right] = temp;
 }
 
+void swap2(Student students1[], Student students2[], int left, int right)
+{
+    Student temp = students1[left];
+    students1[left] = students2[right];
+    students2[right] = temp;
+}
+
 /**
  * merge function for merge sort
  * @param students an array with all of the students
@@ -446,29 +453,39 @@ void merge(Student students[], int left, int middle, int right)
     int sizeRight = right - middle;
     int currLeft = 0;
     int currRight = 0;
+    Student studentsLeft[sizeLeft];
+    Student studentsRight[sizeRight];
+    for (int i = 0; i < sizeLeft; i++)
+    {
+        studentsLeft[i] = students[left + i];
+    }
+    for (int i = 0; i < sizeRight; i++)
+    {
+        studentsRight[i] = students[right + i];
+    }
 
     while ((currLeft + currRight) < (sizeLeft + sizeRight))
     {
         if (currLeft == sizeLeft)
         {
-            swap(students, left + currLeft + currRight, currRight);
+            swap2(students, studentsRight, left + currLeft + currRight, currRight);
             currRight++;
         }
         else if (currRight == sizeRight)
         {
-            swap(students, left + currLeft + currRight, currLeft);
+            swap2(students, studentsLeft, left + currLeft + currRight, currLeft);
             currLeft++;
         }
         else
         {
             if (students[left + currLeft + currRight].grade < students[left + currLeft].grade)
             {
-                swap(students, left + currLeft + currRight, left + currLeft);
+                swap2(students, studentsLeft, left + currLeft + currRight, currLeft);
                 currLeft++;
             }
             else
             {
-                swap(students, left + currLeft + currRight, right + currRight);
+                swap2(students, studentsRight, left + currLeft + currRight, currRight);
                 currRight++;
             }
         }
