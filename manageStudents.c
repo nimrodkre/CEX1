@@ -240,7 +240,7 @@ Student getStudent(int *lineNumber)
 
         char input[MAX_LINE_LEN];
 
-        printf("Enter data <ID> <name> <grade> <age> <country> <city> \n");
+        printf("Enter student info. To exit press q, then enter\n");
         fgets(input, sizeof(input), stdin);
 
         // check if q was received
@@ -263,8 +263,8 @@ Student getStudent(int *lineNumber)
         if (!checkData(sscanfResult, student.id, student.name, student.grade, student.age, student.country,
             student.city))
         {
-            printf("ERROR: Arguments wern't given correctly \n");
-            printf("in line %d \n", *lineNumber);
+            printf("ERROR: info must match specified format\n");
+            printf("in line %d\n", *lineNumber);
             answer = 0;
         }
         else
@@ -352,7 +352,7 @@ void printAllStudents(Student students[], int numStudents)
         {
             continue;
         }
-        printf("%ld,%s,%d,%d,%s,%s \n", students[i].id, students[i].name, students[i].grade, students[i].age,
+        printf("%ld,%s,%d,%d,%s,%s\n", students[i].id, students[i].name, students[i].grade, students[i].age,
                students[i].country, students[i].city);
     }
 }
@@ -515,7 +515,7 @@ int main(int argc, char *argv[])
 {
     if (argc != USAGE_ARGUMENTS)
     {
-        printf("USAGE: Enter best, quick, or merge");
+        printf("USAGE: sortStudents <action>\n");
         return 1;
     }
 
@@ -537,6 +537,6 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-    printf("USAGE: Enter best, quick, or merge");
+    printf("USAGE: sortStudents <action>\n");
     return 1;
 }
