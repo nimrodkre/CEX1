@@ -197,14 +197,14 @@ int checkName(char name[])
     unsigned long len = strlen(name);
     if (len < 1)
     {
-        printf("ERROR: name can only contain alphabetic characters");
+        printf("ERROR: name can only contain alphabetic characters, whitespaces or '-'\n");
         return 0;
     }
     for (unsigned long i = 0; i < len; i++)
     {
         if (!((name[i] >= 'A' && name[i] <= 'z') || (name[i] == '-') || (name[i] == ' ')))
         {
-            printf("ERROR: name can only contain alphabetic characters");
+            printf("ERROR: name can only contain alphabetic characters, whitespaces or '-'\n");
             return 0;
         }
     }
@@ -244,7 +244,7 @@ int checkCity(char city[])
 {
     if (checkCountryCity(city) == 0)
     {
-        printf("ERROR: city can only contain alphabetic characters or '-'");
+        printf("ERROR: city can only contain alphabetic characters or '-'\n");
         return 0;
     }
     return 1;
@@ -259,7 +259,7 @@ int checkCountry(char country[])
 {
     if (checkCountryCity(country) == 0)
     {
-        printf("ERROR: country can only contain alphabetic characters or '-'");
+        printf("ERROR: country can only contain alphabetic characters or '-'\n");
         return 0;
     }
     return 1;
