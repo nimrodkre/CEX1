@@ -79,6 +79,8 @@ void merge(Student students[], int left, int middle, int right);
 
 void swap(Student students[], int left, int right);
 
+void swap2(Student students1[], Student students2[], int left, int right);
+
 void quickSort(Student students[], int left, int right);
 
 int partition(Student students[], int left, int right);
@@ -433,6 +435,13 @@ void swap(Student students[], int left, int right)
     students[right] = temp;
 }
 
+/**
+ * swaps between the two given students from different arrays
+ * @param students1 array 1
+ * @param students2 array 2
+ * @param left loc of array 1
+ * @param right loc of array 2
+ */
 void swap2(Student students1[], Student students2[], int left, int right)
 {
     Student temp = students1[left];
@@ -459,9 +468,9 @@ void merge(Student students[], int left, int middle, int right)
     {
         studentsLeft[i] = students[left + i];
     }
-    for (int i = 0; i < sizeRight; i++)
+    for (int j = 0; j < sizeRight; j++)
     {
-        studentsRight[i] = students[right + i];
+        studentsRight[j] = students[middle + j + 1];
     }
 
     while ((currLeft + currRight) < (sizeLeft + sizeRight))
@@ -478,7 +487,7 @@ void merge(Student students[], int left, int middle, int right)
         }
         else
         {
-            if (studentsLeft[currLeft].grade < studentsRight[currRight].grade)
+            if (studentsLeft[currLeft].grade <= studentsRight[currRight].grade)
             {
                 swap2(students, studentsLeft, left + currLeft + currRight, currLeft);
                 currLeft++;
@@ -593,6 +602,7 @@ int runQuick(void)
  */
 int main(int argc, char *argv[])
 {
+    runMerge();
     if (argc != USAGE_ARGUMENTS)
     {
         printf("USAGE: sortStudents <action>\n");
