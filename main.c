@@ -52,19 +52,19 @@ int getStudents(Student students[]);
 
 Student getStudent(int *lineNumber);
 
-unsigned int countDigits(unsigned long num);
+unsigned int countDigits(long num);
 
-int checkId(unsigned long id);
+int checkId(long id);
 
-int checkGrade(unsigned int grade);
+int checkGrade(int grade);
 
-int checkAge(unsigned int age);
+int checkAge(int age);
 
 int checkName(char name[]);
 
 int checkCountryCity(char countryCity[]);
 
-int checkData(unsigned int sscanfResult, unsigned long id, char name[], unsigned int grade, unsigned age,
+int checkData(unsigned int sscanfResult, long id, char name[], int grade, int age,
               char country[], char city[]);
 
 void printBest(Student students[], int arrLen);
@@ -100,7 +100,7 @@ int runQuick(void);
  * @param city the city of the student
  * @return 0 is bad else 1 if good
  */
-int checkData(unsigned int sscanfResult, unsigned long id, char name[], unsigned int grade, unsigned age,
+int checkData(unsigned int sscanfResult, long id, char name[], int grade, int age,
               char country[], char city[])
 {
     if (sscanfResult != EXPECTED_ARGUMENTS)
@@ -122,7 +122,7 @@ int checkData(unsigned int sscanfResult, unsigned long id, char name[], unsigned
  * @param num the number to check
  * @return the number of digits in the number
  */
-unsigned int countDigits(unsigned long num)
+unsigned int countDigits(long num)
 {
     unsigned int count = 0;
 
@@ -140,7 +140,7 @@ unsigned int countDigits(unsigned long num)
  * @param id the id to check
  * @return 1 if good else 0
  */
-int checkId(unsigned long id)
+int checkId(long id)
 {
     unsigned int numDigits = countDigits(id);
 
@@ -156,7 +156,7 @@ int checkId(unsigned long id)
  * @param grade the grade to check
  * @return 1 if good else 0
  */
-int checkGrade(unsigned int grade)
+int checkGrade(int grade)
 {
     if ((grade < MIN_GRADE) || (grade > MAX_GRADE))
     {
@@ -170,7 +170,7 @@ int checkGrade(unsigned int grade)
  * @param age the age to check
  * @return 1 if good else 0
  */
-int checkAge(unsigned int age)
+int checkAge(int age)
 {
     if ((age < MIN_AGE) || (age > MAX_AGE))
     {
@@ -261,13 +261,12 @@ Student getStudent(int *lineNumber)
                                       &student.grade, &student.age, student.country, student.city);
 
         if (!checkData(sscanfResult, student.id, student.name, student.grade, student.age, student.country,
-                       student.city))
+            student.city))
         {
             printf("ERROR: Arguments wern't given correctly \n");
             printf("in line %d \n", *lineNumber);
             answer = 0;
-        } else
-        {
+        } else {
             answer = 1;
         }
         (*lineNumber)++;
@@ -389,18 +388,15 @@ void merge(Student students[], int left, int middle, int right)
         {
             swap(students, left + currLeft + currRight, currRight);
             currRight++;
-        } else if (currRight == sizeRight)
-        {
+        } else if (currRight == sizeRight) {
             swap(students, left + currLeft + currRight, currLeft);
             currLeft++;
-        } else
-        {
+        } else {
             if (students[left + currLeft + currRight].grade < students[left + currLeft].grade)
             {
                 swap(students, left + currLeft + currRight, left + currLeft);
                 currLeft++;
-            } else
-            {
+            } else {
                 swap(students, left + currLeft + currRight, right + currRight);
                 currRight++;
             }
