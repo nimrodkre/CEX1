@@ -64,6 +64,10 @@ int checkName(char name[]);
 
 int checkCountryCity(char countryCity[]);
 
+int checkCity(char city[]);
+;
+int checkCountry(char country[]);
+
 int checkData(int sscanfResult, long id, char name[], int grade, int age,
               char country[], char city[]);
 
@@ -105,11 +109,12 @@ int checkData(int sscanfResult, long id, char name[], int grade, int age,
 {
     if (sscanfResult != EXPECTED_ARGUMENTS)
     {
+        printf("ERROR: info must match specified format\n");
         return 0;
     }
 
-    if (!(checkId(id) && checkGrade(grade) && checkAge(age) && checkName(name) && checkCountryCity(country)
-        && checkCountryCity(city)))
+    if (!(checkId(id) && checkGrade(grade) && checkAge(age) && checkName(name) && checkCountry(country)
+        && checkCity(city)))
     {
         return 0;
     }
@@ -146,6 +151,7 @@ int checkId(long id)
 
     if (numDigits != ID_DIGITS)
     {
+        printf("ERROR: id must be a 10 digits number that does not start with 0\n");
         return 0;
     }
     return 1;
@@ -160,6 +166,7 @@ int checkGrade(int grade)
 {
     if ((grade < MIN_GRADE) || (grade > MAX_GRADE))
     {
+        printf("ERROR: grade must be an integer between 0 and 100\n");
         return 0;
     }
     return 1;
@@ -174,6 +181,7 @@ int checkAge(int age)
 {
     if ((age < MIN_AGE) || (age > MAX_AGE))
     {
+        printf("ERROR: age must be an integer between 18 and 120\n");
         return 0;
     }
     return 1;
@@ -189,12 +197,14 @@ int checkName(char name[])
     unsigned long len = strlen(name);
     if (len < 1)
     {
+        printf("ERROR: name can only contain alphabetic characters");
         return 0;
     }
     for (unsigned long i = 0; i < len; i++)
     {
         if (!((name[i] >= 'A' && name[i] <= 'z') || (name[i] == '-') || (name[i] == ' ')))
         {
+            printf("ERROR: name can only contain alphabetic characters");
             return 0;
         }
     }
@@ -222,6 +232,36 @@ int checkCountryCity(char countryCity[])
         }
     }
 
+    return 1;
+}
+
+/**
+ * checks city
+ * @param city city to check
+ * @return  0if bad else 1
+ */
+int checkCity(char city[])
+{
+    if (checkCountryCity(city) == 0)
+    {
+        printf("ERROR: city can only contain alphabetic characters or '-'");
+        return 0;
+    }
+    return 1;
+}
+
+/**
+ * checks country
+ * @param country checks the given country
+ * @return  0 if bad else 1
+ */
+int checkCountry(char country[])
+{
+    if (checkCountryCity(country) == 0)
+    {
+        printf("ERROR: country can only contain alphabetic characters or '-'");
+        return 0;
+    }
     return 1;
 }
 
@@ -263,7 +303,6 @@ Student getStudent(int *lineNumber)
         if (!checkData(sscanfResult, student.id, student.name, student.grade, student.age, student.country,
             student.city))
         {
-            printf("ERROR: info must match specified format\n");
             printf("in line %d\n", *lineNumber);
             answer = 0;
         }
@@ -321,7 +360,7 @@ void printBest(Student students[], int arrLen)
     {
         return;
     }
-    printf("best student info is: %ld,%s,%d,%d,%s,%s", retStudent.id, retStudent.name, retStudent.grade, retStudent.age,
+    printf("best student info is: %ld,%s,%d,%d,%s,%s\n", retStudent.id, retStudent.name, retStudent.grade, retStudent.age,
            retStudent.country, retStudent.city);
 }
 
