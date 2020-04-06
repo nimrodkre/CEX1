@@ -593,7 +593,6 @@ int runQuick(void)
  */
 int main(int argc, char *argv[])
 {
-    runMerge();
     if (argc != USAGE_ARGUMENTS)
     {
         printf("USAGE: sortStudents <action>\n");
