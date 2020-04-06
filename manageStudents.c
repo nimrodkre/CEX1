@@ -113,8 +113,32 @@ int checkData(int sscanfResult, long id, char name[], int grade, int age,
         return 0;
     }
 
-    if (!(checkId(id) && checkGrade(grade) && checkAge(age) && checkName(name) && checkCountry(country)
-        && checkCity(city)))
+    if (checkId(id) == 0)
+    {
+        return 0;
+    }
+
+    if (checkName(name) == 0)
+    {
+        return 0;
+    }
+
+    if (checkGrade(grade) == 0)
+    {
+        return 0;
+    }
+
+    if (checkAge(age) == 0)
+    {
+        return 0;
+    }
+
+    if (checkCity(city) == 0)
+    {
+        return 0;
+    }
+
+    if (checkCountry(country) == 0)
     {
         return 0;
     }
@@ -518,7 +542,7 @@ int partition(Student students[], int left, int right)
 
     for (int i = left; i < right; i++)
     {
-        if (strcmp(students[i].name, pivot) > 0)
+        if (strcmp(students[i].name, pivot) < 0)
         {
             swap(students, currentSwap, i);
             currentSwap++;
