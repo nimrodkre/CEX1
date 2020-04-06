@@ -109,7 +109,7 @@ int checkData(unsigned int sscanfResult, long id, char name[], int grade, int ag
     }
 
     if (!(checkId(id) && checkGrade(grade) && checkAge(age) && checkName(name) && checkCountryCity(country)
-          && checkCountryCity(city)))
+        && checkCountryCity(city)))
     {
         return 0;
     }
@@ -266,7 +266,8 @@ Student getStudent(int *lineNumber)
             printf("ERROR: Arguments wern't given correctly \n");
             printf("in line %d \n", *lineNumber);
             answer = 0;
-        } else {
+        } else
+        {
             answer = 1;
         }
         (*lineNumber)++;
@@ -388,15 +389,18 @@ void merge(Student students[], int left, int middle, int right)
         {
             swap(students, left + currLeft + currRight, currRight);
             currRight++;
-        } else if (currRight == sizeRight) {
+        } else if (currRight == sizeRight)
+        {
             swap(students, left + currLeft + currRight, currLeft);
             currLeft++;
-        } else {
+        } else
+        {
             if (students[left + currLeft + currRight].grade < students[left + currLeft].grade)
             {
                 swap(students, left + currLeft + currRight, left + currLeft);
                 currLeft++;
-            } else {
+            } else
+            {
                 swap(students, left + currLeft + currRight, right + currRight);
                 currRight++;
             }
